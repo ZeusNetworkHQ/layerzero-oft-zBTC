@@ -7,14 +7,14 @@ import { getOftStoreAddress } from './tasks/solana'
 
 // Note:  Do not use address for EVM OmniPointHardhat contracts.  Contracts are loaded using hardhat-deploy.
 // If you do use an address, ensure artifacts exists.
-const arbitrumContract: OmniPointHardhat = {
-    eid: EndpointId.ARBSEP_V2_TESTNET,
-    contractName: 'MyOFT', // Note: change this to your production contract name
+const bscContract: OmniPointHardhat = {
+    eid: EndpointId.BSC_V2_MAINNET,
+    contractName: 'ZBTC', // Note: change this to your production contract name
 }
 
 const solanaContract: OmniPointHardhat = {
-    eid: EndpointId.SOLANA_V2_TESTNET,
-    address: getOftStoreAddress(EndpointId.SOLANA_V2_TESTNET),
+    eid: EndpointId.SOLANA_V2_MAINNET,
+    address: getOftStoreAddress(EndpointId.SOLANA_V2_MAINNET),
 }
 
 const EVM_ENFORCED_OPTIONS: OAppEnforcedOption[] = [
@@ -51,16 +51,16 @@ export default async function () {
     // if you declare A,B there's no need to declare B,A
     const connections = await generateConnectionsConfig([
         [
-            arbitrumContract, // Chain A contract
+            bscContract, // Chain A contract
             solanaContract, // Chain B contract
-            [['LayerZero Labs'], []], // [ requiredDVN[], [ optionalDVN[], threshold ] ]
-            [15, 32], // [A to B confirmations, B to A confirmations]
+            [['Horizen', 'P2P', 'Deutsche Telekom'], []], // [ requiredDVN[], [ optionalDVN[], threshold ] ]
+            [20, 32], // [A to B confirmations, B to A confirmations]
             [SOLANA_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS], // Chain B enforcedOptions, Chain A enforcedOptions
         ],
     ])
 
     return {
-        contracts: [{ contract: arbitrumContract }, { contract: solanaContract }],
+        contracts: [{ contract: bscContract }, { contract: solanaContract }],
         connections,
     }
 }
