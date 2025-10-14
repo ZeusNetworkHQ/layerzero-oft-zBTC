@@ -41,19 +41,10 @@ solana program deploy --program-id target/deploy/oft-keypair.json target/verifia
 
 Switch back to Solana `1.17.31`
 
-6. Deploy the OFT contract
+6. Deploy the OFT contract on BSC
 
 ```bash
 pnpm hardhat lz:deploy --tags ZBTC
-```
-
-```bash
-pnpm hardhat verify --network bsc \
-  <OFT_ADDRESS> \
-  "zBTC" \
-  "zBTC" \
-  <LAYERZERO_ENDPOINT_ADDRESS> \
-  <DEPLOYER_ADDRESS>
 ```
 
 7. Create OFT Adapter on Solana
@@ -85,11 +76,22 @@ pnpm hardhat lz:oapp:wire --oapp-config layerzero.config.ts
 Send From 1 OFT from **Solana Mainnet** to **BSC Mainnet**
 
 ```bash
-npx hardhat lz:oft:send --src-eid 30168 --dst-eid 30102 --to <EVM_ADDRESS>  --amount 1
+npx hardhat lz:oft:send --src-eid 30168 --dst-eid 30102 --to <EVM_ADDRESS>  --amount 0.0001
 ```
 
 Send 1 OFT From **BSC Mainnet** to **Solana Mainnet**
 
 ```bash
-npx hardhat lz:oft:send --src-eid 30102 --dst-eid 30168 --to <SOLANA_ADDRESS>  --amount 1
+npx hardhat lz:oft:send --src-eid 30102 --dst-eid 30168 --to <SOLANA_ADDRESS>  --amount 0.0001
+```
+
+10. Verify the OFT contract on BSC (optional)
+
+```bash
+pnpm hardhat verify --network bsc \
+  <OFT_ADDRESS> \
+  "zBTC" \
+  "zBTC" \
+  "0x1a44076050125825900e736c501f859c50fE728c" \
+  <DEPLOYER_ADDRESS>
 ```
