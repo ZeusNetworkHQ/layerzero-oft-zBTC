@@ -14,7 +14,7 @@
 
 <h1 align="center">Solana-EVM Omnichain Fungible Token (OFT) Example</h1>
 
-<p align="center">Template project for a cross-chain token (<a href="https://docs.layerzero.network/v2/concepts/applications/oft-standard">OFT</a>) powered by the LayerZero protocol. This example primarily involves Solana and EVM. There are also additional instructions for wiring to Aptos.</p>
+<p align="center">Template project for a cross-chain token (<a href="https://docs.layerzero.network/v2/concepts/applications/oft-standard">OFT</a>) powered by the LayerZero protocol. This example primarily involves Solana and EVM. There are also additional instructions for wiring to Aptos. Supports BNB Chain (BSC); see <code>hardhat.config.ts</code> and <code>layerzero.config.ts</code>.</p>
 
 ## Table of Contents
 
@@ -124,11 +124,9 @@ cargo install --git https://github.com/coral-xyz/anchor --tag v0.29.0 anchor-cli
     - We recommend that you request 5 devnet SOL, which should be sufficient for this walkthrough. For the example here, we will deploy to **Solana Devnet**.
     - If you hit rate limits with the above `airdrop` command, you can also use the [official Solana faucet](https://faucet.solana.com/).
 - Solana RPC
-
   - Also set the `RPC_URL_SOLANA_TESTNET` value. Note that while the naming used here is `TESTNET`, it refers to the [Solana Devnet](https://docs.layerzero.network/v2/developers/evm/technical-reference/deployed-contracts#solana-testnet). We use `TESTNET` to keep it consistent with the existing EVM testnets.
 
 - EVM Deployer:
-
   - Set up your EVM deployer address/account via the `.env`
   - You can specify either `MNEMONIC` or `PRIVATE_KEY`:
 
@@ -151,7 +149,7 @@ anchor keys sync -p oft
 ```
 
 <details>
-The above command will generate a keypair for the OFT program in your workspace if it doesn't yet exist, and also automatically update `Anchor.toml` to use the generated keypair's public key. The default path for the program's keypair will be `target/deploy/oft-keypair.json`. The program keypair is only used for initial deployment of the program. 
+The above command will generate a keypair for the OFT program in your workspace if it doesn't yet exist, and also automatically update `Anchor.toml` to use the generated keypair's public key. The default path for the program's keypair will be `target/deploy/oft-keypair.json`. The program keypair is only used for initial deployment of the program.
 </details>
 <br>
 View the program ID's based on the generated keypairs:
@@ -336,8 +334,8 @@ This section explains the three different options available for creating OFTs on
           │                                                       │
          NO                                                     YES
           │                                                       │
-  ✅ Use OFT (Preferred)                              Can you transfer the 
-  • Creates a new token                              Mint Authority to OFT 
+  ✅ Use OFT (Preferred)                              Can you transfer the
+  • Creates a new token                              Mint Authority to OFT
   • Uses burn and mint mechanism                     Store or new SPL Multisig?
                                                               │
                                                 ┌────────────┴────────────┐
@@ -451,68 +449,68 @@ npx hardhat --help
 
 ##### Required Parameters
 
-- **`--eid`** (EndpointId)  
+- **`--eid`** (EndpointId)
   Solana mainnet (30168) or testnet (40168)
 
-- **`--program-id`** (string)  
+- **`--program-id`** (string)
   The OFT Program ID
 
 ##### Optional Parameters
 
-- **`--amount`** (number)  
-  The initial supply to mint on Solana  
+- **`--amount`** (number)
+  The initial supply to mint on Solana
   _Default: undefined_
 
-- **`--local-decimals`** (number)  
-  Token local decimals  
+- **`--local-decimals`** (number)
+  Token local decimals
   _Default: 9_
 
-- **`--shared-decimals`** (number)  
-  OFT shared decimals  
+- **`--shared-decimals`** (number)
+  OFT shared decimals
   _Default: 6_
 
-- **`--name`** (string)  
-  Token Name  
+- **`--name`** (string)
+  Token Name
   _Default: "MockOFT"_
 
-- **`--symbol`** (string)  
-  Token Symbol  
+- **`--symbol`** (string)
+  Token Symbol
   _Default: "MOFT"_
 
-- **`--uri`** (string)  
-  URI for token metadata  
+- **`--uri`** (string)
+  URI for token metadata
   _Default: ""_
 
-- **`--seller-fee-basis-points`** (number)  
-  Seller fee basis points  
+- **`--seller-fee-basis-points`** (number)
+  Seller fee basis points
   _Default: 0_
 
-- **`--token-metadata-is-mutable`** (boolean)  
-  Whether token metadata is mutable  
+- **`--token-metadata-is-mutable`** (boolean)
+  Whether token metadata is mutable
   _Default: true_
 
-- **`--additional-minters`** (CSV string)  
-  Comma-separated list of additional minters  
+- **`--additional-minters`** (CSV string)
+  Comma-separated list of additional minters
   _Default: undefined_
 
-- **`--only-oft-store`** (boolean)  
-  If you plan to have only the OFTStore and no additional minters. This is not reversible, and will result in losing the ability to mint new tokens by everything but the OFTStore.  
+- **`--only-oft-store`** (boolean)
+  If you plan to have only the OFTStore and no additional minters. This is not reversible, and will result in losing the ability to mint new tokens by everything but the OFTStore.
   _Default: false_
 
-- **`--freeze-authority`** (string)  
-  The Freeze Authority address (only supported in onlyOftStore mode)  
+- **`--freeze-authority`** (string)
+  The Freeze Authority address (only supported in onlyOftStore mode)
   _Default: ""_
 
 ##### MABA-Only Parameters
 
 The following parameters are only used for Mint-And-Burn Adapter (MABA) mode:
 
-- **`--mint`** (string)  
-  The Token mint public key (used for MABA only)  
+- **`--mint`** (string)
+  The Token mint public key (used for MABA only)
   _Default: undefined_
 
-- **`--token-program`** (string)  
-  The Token Program public key (used for MABA only)  
+- **`--token-program`** (string)
+  The Token Program public key (used for MABA only)
   _Default: TOKEN_PROGRAM_ID_
 
 #### Mint Authority Configuration
